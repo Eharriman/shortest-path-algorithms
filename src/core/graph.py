@@ -18,6 +18,7 @@ class Graph:
 
 
 
+"""
 graph1 = Graph(directed=True)
 
 graph1.add_edge('A', 'B', 3)
@@ -27,3 +28,8 @@ graph1.add_edge('C', 'D', 2)
 
 for neighbour, weight in graph1.get_neighbours('A'):
     print(f"Edge A -> {neighbour}, weight = {weight}")
+
+for neighbour, weight in graph1.get_neighbours('B'):
+    print(f"Edge B -> {neighbour}, weight = {weight}")
+
+"""
