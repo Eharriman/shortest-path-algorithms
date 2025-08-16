@@ -1,26 +1,31 @@
 import sys
 from typing import Tuple
-from graph import Graph
+from src.core.graph import Graph  # adjust the import path to your repo layout
 
 
-def dijkstra(graph: graph.Graph, src: str) -> Tuple[dict, dict]:
+def dijkstra(graph: Graph, src: str) -> Tuple[dict, dict]:
+    # distance/prev ptr. dictionaries
+    dist = {node: float('inf') for node in graph.nodes}
+    prev = {node: None for node in graph.nodes}
 
-    # Distance and ptr. dictionaries
-    dist = {}
-    prev = {}
+    # Queue for unvisited nodes
+    Q = set(graph.nodes)
 
-    # Priority  queue
-    Q = set()
-
-    for n in graph.nodes:
-        # set dist[n]
-        dist[n] = [sys.maxsize]
-        prev[n] = None
-        Q.add(n)
-        #prev[n]
-
+    # initial conditions for source node
     dist[src] = 0
 
-    #while Q not
+    while Q:
+        # Retrieves current shortest distance for node
+        u = min(Q, key=lambda n: dist[n])
+        Q.remove(u)
+
+        # Update length based on neighbour distance
+        for neighbour, weight in graph.adj[u]:
+            curr_length = dist[u] + weight
+            if curr_length < dist[neighbour]:
+                dist[neighbour] = curr_length
+                prev[neighbour] = u
 
     return dist, prev
+
+
