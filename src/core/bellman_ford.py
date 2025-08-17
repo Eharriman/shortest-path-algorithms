@@ -25,5 +25,21 @@ def bellman_ford(graph: Graph, src: str) -> Tuple[dict, dict]:
                     dist[v] = dist[u] + weight
                     prev[v] = u
 
+    for u in graph.nodes:
+        for v, weight in graph.adj[u]:
+            if dist[u] + weight < dist[v]:
+
+                visited = {node: False for node in graph.nodes}
+                curr = v
+                while not visited[curr]:
+                    visited[curr] = True
+                    curr = prev[curr]
+
+                cycle = [curr]
+                walk = prev[curr]
+                while walk != curr:
+                    cycle.insert(0, walk)
+                    walk = prev[walk]
+                raise NegativeWeightCycleError(cycle)
 
     return dist, prev
