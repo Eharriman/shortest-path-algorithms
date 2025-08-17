@@ -1,6 +1,6 @@
 import sys
 from typing import Tuple
-from src.core.graph import Graph  # adjust the import path to your repo layout
+from src.core.graph import Graph
 
 
 def dijkstra(graph: Graph, src: str) -> Tuple[dict, dict]:
