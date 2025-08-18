@@ -6,6 +6,12 @@ class Graph:
         self.nodes = set()
         self.directed = directed
 
+    def __len__(self):
+        return len(self.nodes)
+
+    def __iter__(self):
+        return iter(self.nodes)
+
     def add_edge(self, u, v, weight):
         self.adj[u].append((v, weight))
         self.nodes.add(u)
