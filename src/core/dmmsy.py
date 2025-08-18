@@ -31,14 +31,15 @@ class DMMSY:
 
         pass
 
+    def bmssp(self, lvl, B, S):
+        pass
+
     def base_case(self, B, S):
         """
-
         :param B:
         :param S:
         :return:
         """
-
         assert len(S) == 1
         x = next(iter(S))
 
@@ -68,3 +69,41 @@ class DMMSY:
             B_prime = max(self.bd[v] for v in U0)
             U = {v for v in U0 if self.bd[v] < B_prime}
             return B_prime, U
+
+    def find_pivots(self, B, S):
+        W = set(S)
+        Wi_prev = set(S)
+
+        forest_parents = dict()
+
+        for _ in range(self.k):
+            Wi = set()
+
+            # Ho to ensure u ∈ Wi−1
+            for v, w_uv in self.graph.get_neighbours(u):
+                new_dist = self.bd[u] + w_uv
+
+                if new_dist < self.bd[v]
+                    # Wi <- Wi ∪ {v}. Add v to the set?
+                    self.bd[v] = new_dist
+                    Wi.add(v)
+                    forest_parents[v] = u
+            #W ← W ∪ Wi
+
+            if not Wi:
+                break
+
+            W.update(Wi)
+            Wi_prev = Wi
+
+            if len(W) > self.k * len(S):
+                return set(S), W
+
+
+
+
+        F = test1 # Need to implement F ← {(u, v) ∈ E : u, v ∈ W, bd[v] = bd[u] + wuv}
+        P = test2 # Need to implement P ← {u ∈ S : u is a root of a tree with ≥ k vertices in F }
+        return P, W
+
+
