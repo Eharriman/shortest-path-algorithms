@@ -24,6 +24,11 @@ class DMMSY:
                 return weight
         return float('inf')
 
+    def _find_roots(self, forest, v):
+        while v in forest:
+            v = forest[v]
+        return v
+
     def run(self, src):
         self.bd[src] = 0
         self.complete.add(src)
