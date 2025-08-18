@@ -91,15 +91,16 @@ class DMMSY:
             Wi = set()
 
             # Ho to ensure u ∈ Wi−1
-            for v, w_uv in self.graph.get_neighbours(u):
-                new_dist = self.bd[u] + w_uv
+            for u in Wi_prev:
+                for v, w_uv in self.graph.get_neighbours(u):
+                    new_dist = self.bd[u] + w_uv
 
-                if new_dist < self.bd[v]
-                    # Wi <- Wi ∪ {v}. Add v to the set?
-                    self.bd[v] = new_dist
-                    Wi.add(v)
-                    forest_parents[v] = u
-            #W ← W ∪ Wi
+                    if new_dist < self.bd[v]:
+                        # Wi <- Wi ∪ {v}. Add v to the set?
+                        self.bd[v] = new_dist
+                        Wi.add(v)
+                        forest_parents[v] = u
+                        #W ← W ∪ Wi
 
             if not Wi:
                 break
@@ -110,11 +111,20 @@ class DMMSY:
             if len(W) > self.k * len(S):
                 return set(S), W
 
+            # Build forest F: all (u,v) ∈ E with u,v ∈ W and bd[v] = bd[u] + w_uv
+            forest = {v: u for v, u in forest_parents.items() if v in W and u in W and self.bd[v] == self.bd[u] + self._get_weight(u, v)}
 
+            # Count size of trees rooted at each s ∈ S
+            subtree_sizes = {s: 0 for s in S}
 
+            for v in forest:
+                root = self._find_roots(forest, v)
+                if root in subtree_sizes:
+                    subtree_sizes[root] += 1
 
-        F = test1 # Need to implement F ← {(u, v) ∈ E : u, v ∈ W, bd[v] = bd[u] + wuv}
-        P = test2 # Need to implement P ← {u ∈ S : u is a root of a tree with ≥ k vertices in F }
-        return P, W
+            # Select pivots
+            P = {s for s, size in subtree_sizes.items() if size >= self.k}
+
+            return P, W
 
 
