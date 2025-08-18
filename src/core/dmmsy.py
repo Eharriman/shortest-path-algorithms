@@ -18,6 +18,12 @@ class DMMSY:
 
         self.complete = set()
 
+    def _get_weight(self, u, v):
+        for neighbour, weight in self.graph.get_neighbours(u):
+            if neighbour == v:
+                return weight
+        return float('inf')
+
     def run(self, src):
         self.bd[src] = 0
         self.complete.add(src)
