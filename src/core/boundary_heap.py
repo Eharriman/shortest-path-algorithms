@@ -76,3 +76,19 @@ class BoundaryHeap:
 
         if not self.heap:
             return float('inf'), set()
+
+        min_val = None
+        while self.heap:
+            val, _, node = self.heap[0]
+            if (val, node) in self.deleted:
+                heapq.heappop(self.heap)
+                self.delete.remove((val, node))
+                continue
+            min_val = val
+            break
+
+        if min_val is None:
+            return float('inf'), set()
+
+        while self.heap and self.heap[0][0] == min_val:
+            val, _, node = heapq.heappop(self.heap)
