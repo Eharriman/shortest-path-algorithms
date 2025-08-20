@@ -42,3 +42,37 @@ class BoundaryHeap:
         self.entry_map[node] = (value, self.counter)
         heapq.heappush(self.heap, entry)
         self.counter += 1
+
+    def pull(self):
+        """
+        To retrieve the smallest M values from D0 ∪ D1, we collect a sufficient prefix of blocks from D0
+        and D1 separately, denoted as S′
+        0 and S′
+        1, respectively. That is, in D0 (D1) we start from the first block
+        and stop collecting as long as we have collected all the remaining elements or the number of collected
+        elements in S′
+        0 (S′
+        1) has reached M . If S′
+        0 ∪ S′
+        1 contains no more than M elements, it must contain all
+        blocks in D0 ∪ D1, so we return all elements in S′
+        0 ∪ S′
+        1 as S′ and set x to the upper bound B, and the
+        time needed is O(|S′|). Otherwise, we want to make |S′| = M , and because the block sizes are kept
+        at most M , the collecting process takes O(M ) time.
+        Now we know the smallest M elements must be contained in S′
+        0 ∪S′
+        1 and can be identified from S′
+        0 ∪S′
+        1
+        as S′ in O(M ) time. Then we delete elements in S′ from D0 and D1, whose running time is amortized
+        to insertion time. Also set returned value x to the smallest remaining value in D0 ∪ D1, which can also
+        be found in O(M ) time
+        :return:
+        """
+
+        Si = set()
+        Bi = None
+
+        if not self.heap:
+            return float('inf'), set()
