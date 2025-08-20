@@ -43,6 +43,12 @@ class DMMSY:
         pass
 
     def bmssp(self, lvl, B, S):
+
+        if lvl == 0:
+            return self.base_case(B, S)
+
+        P, W = self.base_case(B, S)
+
         pass
 
     def base_case(self, B, S):
