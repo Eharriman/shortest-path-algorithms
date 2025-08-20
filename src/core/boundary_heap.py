@@ -72,7 +72,7 @@ class BoundaryHeap:
         """
 
         Si = set()
-        Bi = None
+        Di = None
 
         if not self.heap:
             return float('inf'), set()
@@ -92,3 +92,11 @@ class BoundaryHeap:
 
         while self.heap and self.heap[0][0] == min_val:
             val, _, node = heapq.heappop(self.heap)
+            if (val, node) in self.deleted:
+                self.deleted.remove((val, node))
+                continue
+            Si.add(node)
+            del self.entry_map[node]
+
+        Di = min_val
+        return Di, Si
