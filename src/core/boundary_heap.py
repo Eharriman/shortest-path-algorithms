@@ -100,3 +100,14 @@ class BoundaryHeap:
 
         Di = min_val
         return Di, Si
+
+    def batch_prepend(self, entries):
+        for node, value in entries:
+            self.insert(node, value)
+
+    def is_empty(self):
+        while self.heap and (self.heap[0][0], self.heap[0][2]) in self.deleted:
+            val, _, node = heapq.heappop(self.heap)
+            self.deleted.remove((val, node))
+        return not self.heap
+
