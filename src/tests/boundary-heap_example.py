@@ -8,6 +8,7 @@ def test_initialize():
     print("Passed.")
 
 def test_insert_pull():
+    print("++++ Testing the insert/pull method ++++")
     bheap = BoundaryHeap()
     bheap.insert('A', 5)
     bheap.insert('A', 5)
@@ -22,6 +23,19 @@ def test_insert_pull():
 
     print("Passed.")
 
+def test_batch_prepend():
+    print("++++ Testing the batch-prepend method ++++")
+    bheap = BoundaryHeap()
+    bheap.insert('A', 10)
+    batch = [('B', 5), ('C', 5)]
+    bheap.batch_prepend(batch)
 
-#test_initialize()
+    B, S = bheap.pull()
+    assert B == 5
+    assert S == {'B', 'C'}
+    print("Passed.")
+
+
+test_initialize()
 test_insert_pull()
+test_batch_prepend()
