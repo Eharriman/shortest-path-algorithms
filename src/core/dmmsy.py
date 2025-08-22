@@ -1,4 +1,5 @@
 from src.core.graph import Graph
+from src.core.boundary_heap import BoundaryHeap
 import heapq
 
 class DMMSY:
@@ -43,11 +44,29 @@ class DMMSY:
         pass
 
     def bmssp(self, lvl, B, S):
+        """
 
+        :param lvl: Recursion level. Called l in the paper.
+        :param B:
+        :param S:
+        :return:
+        """
+        M = 2 ** ((lvl - 1) * self.t)
+
+        # lvl == 0 is the base case for bmssp. Call w/  B and S.
         if lvl == 0:
             return self.base_case(B, S)
 
-        P, W = self.base_case(B, S)
+        # Step 4
+        P, W = self.find_pivots(B, S)
+
+        # Step 5-6.
+        D = BoundaryHeap()
+        D.initialize(M, B)
+
+        # Initialize D with elements from P:
+        for x in P:
+            D.insert(x, self.bd[x])
 
         pass
 
