@@ -68,6 +68,15 @@ class DMMSY:
         for x in P:
             D.insert(x, self.bd[x])
 
+        U = set()
+        if P:
+           B_prime_0 = min(self.bd[x] for x in P)
+        else:
+            B_prime_0 = B
+
+        i = 0
+        B_prime = B_prime_0
+
         pass
 
     def base_case(self, B, S):
