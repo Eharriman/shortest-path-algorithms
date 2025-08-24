@@ -77,6 +77,10 @@ class DMMSY:
         i = 0
         B_prime = B_prime_0
 
+        while len(U) < self.k * 2 ** (lvl * self.t) and not D.is_empty():
+            i += 1
+
+
         pass
 
     def base_case(self, B, S):
