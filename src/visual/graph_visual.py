@@ -34,7 +34,7 @@ class GraphVisualizer:
                 edge_colours.append('grey')
 
         plt.figure(figsize=(10, 7))
-        nx.draw(self.G, pos, with_labels=True, node_colour=node_colours, edge_colour=edge_colours, node_size=1000,
+        nx.draw(self.G, pos, with_labels=True, node_color=node_colours, edge_color=edge_colours, node_size=1000,
                 font_weight='bold')
         nx.draw_networkx_edge_labels(self.G, pos, edge_labels=edge_labels)
 
