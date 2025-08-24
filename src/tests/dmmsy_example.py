@@ -56,8 +56,42 @@ def test_bmssp():
     print("U:", U)
     print("bd map:", dmmsy.bd)
 
+def test_dmmsy():
+    graph1 = Graph(directed=True)
+    """
+    graph1.add_edge('A', 'B', 1)
+    graph1.add_edge('B', 'C', 2)
+    graph1.add_edge('A', 'C', 4)
+    graph1.add_edge('C', 'D', 1)
+    
+    """
+
+    graph1.add_edge('A', 'B', 2)
+    graph1.add_edge('A', 'F', 5)
+    graph1.add_edge('A', 'L', 8)
+    graph1.add_edge('B', 'C', 7)
+    graph1.add_edge('B', 'D', 8)
+    graph1.add_edge('C', 'E', 11)
+    graph1.add_edge('D', 'E', 4)
+    graph1.add_edge('D', 'H', 3)
+    graph1.add_edge('D', 'G', 6)
+    graph1.add_edge('D', 'J', 2)
+    graph1.add_edge('F', 'I', 12)
+    graph1.add_edge('I', 'J', 9)
+    graph1.add_edge('I', 'K', 2)
+
+    k = 1
+    t = 1
+
+    alg = DMMSY(graph1, k, t)
+    B_prime, U = alg.run('A')
+
+    print("Final B′:", B_prime)
+    print("Set U returned:", U)
+    print("bd map (shortest distances):", alg.bd)
 
 
 #print(test_base_case())
 #print(test_find_pivots())
-print(test_bmssp())
+#print(test_bmssp())
+print(test_dmmsy())
