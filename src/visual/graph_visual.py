@@ -15,4 +15,5 @@ class GraphVisualizer:
             for v, w in self.graph.get_neighbours(u):
                 self.G.add_edge(u, v, weight=w)
 
-
+    def draw(self, highlight_nodes=None, highlight_edges=None, title="Test Graph", pause=None):
+        pass
