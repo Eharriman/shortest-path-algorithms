@@ -16,4 +16,20 @@ class GraphVisualizer:
                 self.G.add_edge(u, v, weight=w)
 
     def draw(self, highlight_nodes=None, highlight_edges=None, title="Test Graph", pause=None):
-        pass
+        pos = nx.spring_layout(self.G, seed=42)
+        edge_lables = nx.get_edge_attributes(self.G, 'weight')
+
+        node_colours = []
+        for node in self.G.nodes:
+            if highlight_nodes and node in highlight_nodes:
+                node_colours.append('green')
+            else:
+                node_colours.append('blue')
+
+        edge_colours = []
+        for edge in self.G.edges:
+            if highlight_edges and edge in highlight_edges:
+                edge_colours.append('red')
+            else:
+                edge_colours.append('grey')
+
