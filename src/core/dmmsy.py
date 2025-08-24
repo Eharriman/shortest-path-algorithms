@@ -33,6 +33,7 @@ class DMMSY:
     def run(self, src):
         self.bd[src] = 0
         self.complete.add(src)
+
         # Lemma 3.1. Integer level which is bounded l ∈ [0, ⌈log(n)/t⌉]. See pg. 4
         lvl = int(self.n.bit_length() // self.t)
 
@@ -41,7 +42,9 @@ class DMMSY:
         # The set of vertices, S, includes the source vertex
         S = {src}
 
-        pass
+        B_prime, U = self.bmssp(lvl, B, S)
+
+        return B_prime, U
 
     def bmssp(self, lvl, B, S):
         """
@@ -191,5 +194,8 @@ class DMMSY:
             P = {s for s, size in subtree_sizes.items() if size >= self.k}
 
             return P, W
+
+        # Default return if no pivot is found
+        return set(), W
 
 
