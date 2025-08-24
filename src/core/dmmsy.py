@@ -227,7 +227,7 @@ class DMMSY:
             return P, W
 
         # Default return if no pivot is found
-        print(f"[Debug from find_pivots() line 230] (Finished outside for loop) Final P = {P}")
+        #print(f"[Debug from find_pivots() line 230] (Finished outside for loop) Final P = {P}")
         print(f"[Debug from find_pivots() line 231] (Finished outside for loop) Final W = {W}")
         return set(), W
 
