@@ -36,6 +36,28 @@ def test_find_pivots():
     print("Pivots:", P)
     print("W reachable set:", W)
 
+def test_bmssp():
+    graph1 = Graph(directed=True)
+    graph1.add_edge('A', 'B', 1)
+    graph1.add_edge('A', 'C', 5)
+    graph1.add_edge('B', 'C', 1)
+    graph1.add_edge('C', 'D', 1)
+
+    dmmsy = DMMSY(graph1, k=1, t=1)
+    dmmsy.bd['A'] = 0
+    dmmsy.complete.add('A')
+    S = {'A'}
+    B = float('inf')
+    lvl = 2
+
+    B_prime, U = dmmsy.bmssp(lvl, B, S)
+
+    print("B':", B_prime)
+    print("U:", U)
+    print("bd map:", dmmsy.bd)
+
+
 
 #print(test_base_case())
-print(test_find_pivots())
+#print(test_find_pivots())
+print(test_bmssp())
