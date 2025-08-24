@@ -186,6 +186,7 @@ class DMMSY:
             for u in Wi_prev:
                 for v, w_uv in self.graph.get_neighbours(u):
                     new_dist = self.bd[u] + w_uv
+                    print(f"[Debug from find_pivots() line 189] Checking {u} -> {v} (w={w_uv}), proposed bd = {new_dist}, current bd[v] = {self.bd[v]}")
 
                     if new_dist < self.bd[v]:
                         # Wi <- Wi ∪ {v}. Add v to the set?
@@ -194,13 +195,16 @@ class DMMSY:
                         forest_parents[v] = u
                         #W ← W ∪ Wi
 
+            print(f"[Debug from find_pivots() line 198] Wi = {Wi}")
             if not Wi:
+                print(f"[Debug from find_pivots() line 198] No new vertices reachable.")
                 break
 
             W.update(Wi)
             Wi_prev = Wi
 
             if len(W) > self.k * len(S):
+                print(f"[Debug from find_pivots() line 207] Early exit: |W| = {len(W)} > {self.k * len(S)}")
                 return set(S), W
 
             # Build forest F: all (u,v) ∈ E with u,v ∈ W and bd[v] = bd[u] + w_uv
@@ -217,9 +221,14 @@ class DMMSY:
             # Select pivots
             P = {s for s, size in subtree_sizes.items() if size >= self.k}
 
+            print(f"[Debug from find_pivots() line 224] (Finished inside for loop) Final P = {P}")
+            print(f"[Debug from find_pivots() line 225] (Finished inside for loop) Final W = {W}")
+
             return P, W
 
         # Default return if no pivot is found
+        print(f"[Debug from find_pivots() line 230] (Finished outside for loop) Final P = {P}")
+        print(f"[Debug from find_pivots() line 231] (Finished outside for loop) Final W = {W}")
         return set(), W
 
 
