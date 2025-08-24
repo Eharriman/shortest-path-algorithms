@@ -85,8 +85,30 @@ class DMMSY:
             U.update(U_i)
             K = []
 
+            for u in U_i:
+                for v, w_uv in self.graph.get_neighbours(u):
+                    new_dist = self.bd[u] + w_uv
 
-        pass
+                    if new_dist <= self.bd[v]:
+                        self.bd[v] = new_dist
+
+                        if B_i <= new_dist < B:
+                            D.insert(v, new_dist)
+
+                        elif B_prime_i <= new_dist < B_i:
+                            K.append((v, new_dist))
+
+            prepend_set = K
+            for x in S_i:
+                if B_prime_i <= self.bd[x] < B_i:
+                    prepend_set.append((x, self.bd[x]))
+
+            D.batch_prepend(prepend_set)
+
+            B_prime = min(B_prime, B_prime_i)
+
+        U_final = {x for x in W if self.bd[x] < B_prime}
+        return B_prime, U.union(U_final)
 
     def base_case(self, B, S):
         """
