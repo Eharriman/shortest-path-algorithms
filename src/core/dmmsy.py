@@ -80,6 +80,11 @@ class DMMSY:
         while len(U) < self.k * 2 ** (lvl * self.t) and not D.is_empty():
             i += 1
 
+            B_i,S_i = D.pull()
+            B_prime_i, U_i = self.bmssp(lvl - 1, B_i, S_i)
+            U.update(U_i)
+            K = []
+
 
         pass
 
