@@ -1,5 +1,6 @@
 from src.core.graph import Graph
 from src.core.dmmsy import DMMSY
+import inspect
 
 def test_base_case():
     graph1 = Graph(directed=True)
@@ -89,6 +90,10 @@ def test_dmmsy():
     print("Final B′:", B_prime)
     print("Set U returned:", U)
     print("bd map (shortest distances):", alg.bd)
+    frame = inspect.currentframe().f_back
+    linenum = frame.f_lineno
+    print(f"This is from the line {linenum}")
+
 
 
 #print(test_base_case())
