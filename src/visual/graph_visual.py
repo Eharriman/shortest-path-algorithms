@@ -17,7 +17,7 @@ class GraphVisualizer:
 
     def draw(self, highlight_nodes=None, highlight_edges=None, title="Test Graph", pause=None):
         pos = nx.spring_layout(self.G, seed=42)
-        edge_lables = nx.get_edge_attributes(self.G, 'weight')
+        edge_labels = nx.get_edge_attributes(self.G, 'weight')
 
         node_colours = []
         for node in self.G.nodes:
@@ -32,4 +32,19 @@ class GraphVisualizer:
                 edge_colours.append('red')
             else:
                 edge_colours.append('grey')
+
+        plt.figure(figsize=(10, 7))
+        nx.draw(self.G, pos, with_labels=True, node_colour=node_colours, edge_colour=edge_colours, node_size=1000,
+                font_weight='bold')
+        nx.draw_networkx_edge_labels(self.G, pos, edge_labels=edge_labels)
+
+        plt.title(title)
+        plt.tight_layout()
+        plt.show(block=False)
+
+        if pause:
+            plt.pause(pause)
+            plt.close()
+        else:
+            plt.show()
 
