@@ -42,15 +42,15 @@ class DMMSY:
         # The set of vertices, S, includes the source vertex
         S = {src}
 
-        print(f"[Debug from run() line 45] Running dmmsy from source: {src}")
-        print(f"[Debug from run() line 46] Initial level: {lvl}, Boundary: {B}, Set S: {S}")
+        #print(f"[Debug from run() line 45] Running dmmsy from source: {src}")
+        #print(f"[Debug from run() line 46] Initial level: {lvl}, Boundary: {B}, Set S: {S}")
 
 
         B_prime, U = self.bmssp(lvl, B, S)
 
-        print(f"[Debug from run() line 51] Final B′: {B_prime}")
-        print(f"[Debug from run() line 52] Final set U: {U}")
-        print(f"[Debug from run() line 53] Final bd map: {self.bd}")
+        #print(f"[Debug from run() line 51] Final B′: {B_prime}")
+        #print(f"[Debug from run() line 52] Final set U: {U}")
+        #print(f"[Debug from run() line 53] Final bd map: {self.bd}")
 
         return B_prime, U
 
@@ -61,36 +61,37 @@ class DMMSY:
         :param S:
         :return:
         """
-        print(f"\n[Debug from bmssp() line 64] Level: {lvl}, Boundary: {B}, Set S: {S}")
+        #print(f"\n[Debug from bmssp() line 64] Level: {lvl}, Boundary: {B}, Set S: {S}")
         M = 2 ** ((lvl - 1) * self.t)
 
         # lvl == 0 is the base case for bmssp. Call w/  B and S.
         if lvl == 0:
-            print(f"[Debug from bmssp() line 69] Base case triggered at level 0.")
+            #print(f"[Debug from bmssp() line 69] Base case triggered at level 0.")
             return self.base_case(B, S)
 
         # Step 4
         P, W = self.find_pivots(B, S)
-        print(f"[Debug from bmssp() line 74] Pivots: {P}")
-        print(f"[Debug from bmssp() line 75] Proximity set: {W}")
-        print(f"[Debug from bmssp() line 76] bd after pivot: {self.bd}")
+        #print(f"[Debug from bmssp() line 74] Pivots: {P}")
+        #print(f"[Debug from bmssp() line 75] Proximity set: {W}")
+        #print(f"[Debug from bmssp() line 76] bd after pivot: {self.bd}")
 
         # Step 5-6.
         D = BoundaryHeap()
         D.initialize(M, B)
 
-        print(f"[Debug from bmssp() line 82] Initializing BoundaryHeap with pivots:")
+        #print(f"[Debug from bmssp() line 82] Initializing BoundaryHeap with pivots:")
 
         # Initialize D with elements from P:
         for x in P:
-            print(f"[Debug from bmssp() line 82]    PIVOT: {x} -> bd[{x}] = {self.bd[x]}")
+            #print(f"[Debug from bmssp() line 82]    PIVOT: {x} -> bd[{x}] = {self.bd[x]}")
             D.insert(x, self.bd[x])
 
         U = set()
         if P:
            B_prime_0 = min(self.bd[x] for x in P)
         else:
-            B_prime_0 = B
+            #B_prime_0 = B
+            B_prime_0 = float('inf')
 
         i = 0
         B_prime = B_prime_0
@@ -99,11 +100,11 @@ class DMMSY:
             i += 1
 
             B_i,S_i = D.pull()
-            print(f"[Debug from bmssp() line 102] Pull #{i}: Bi = {B_i}, Si = {S_i}")
+            #print(f"[Debug from bmssp() line 103] Pull #{i}: Bi = {B_i}, Si = {S_i}")
             B_prime_i, U_i = self.bmssp(lvl - 1, B_i, S_i)
             U.update(U_i)
-            print(f"[Debug from bmssp() line 105] Ui = {U_i}")
-            print(f"[Debug from bmssp() line 106] Updated bd: {self.bd}")
+            #print(f"[Debug from bmssp() line 106] Ui = {U_i}")
+            #print(f"[Debug from bmssp() line 107] Updated bd: {self.bd}")
             K = []
 
             for u in U_i:
@@ -139,7 +140,7 @@ class DMMSY:
         """
         assert len(S) == 1
         x = next(iter(S))
-        print(f"\n[Debug from base_case() line 142] Node: {x}, Boundary: {B}")
+        #print(f"\n[Debug from base_case() line 143] Node: {x}, Boundary: {B}")
 
         U0 = {x}
         # Binary heap w/ singleton element and distance. See Algorithm 2 line 3.
@@ -150,7 +151,7 @@ class DMMSY:
         while heap and len(U0) < self.k + 1:
             d_u, u = heapq.heappop(heap) # Line 5. Extract the minimum
 
-            print(f"[Debug from base_case() line 153] Visiting {u}, bd = {d_u}")
+            #print(f"[Debug from base_case() line 154] Visiting {u}, bd = {d_u}")
 
             if u in visited:
                 continue
@@ -159,7 +160,7 @@ class DMMSY:
 
             for v, w_uv in self.graph.get_neighbours(u):
                 new_dist = self.bd[u] + w_uv
-                print(f"[Debug from base_case() line 162] Checking edge {u} -> {v} (w={w_uv}), proposed bd = {new_dist}, current bd[v] = {self.bd[v]}")
+                #print(f"[Debug from base_case() line 163] Checking edge {u} -> {v} (w={w_uv}), proposed bd = {new_dist}, current bd[v] = {self.bd[v]}")
                 if new_dist < self.bd[v] and new_dist < B:
                     self.bd[v] = new_dist
                     heapq.heappush(heap, (self.bd[v], v))
@@ -172,21 +173,21 @@ class DMMSY:
             return B_prime, U
 
     def find_pivots(self, B, S):
-        print(f"\n[Debug from find_pivots() line 175] Starting with S = {S}, Bound B = {B}")
+        #print(f"\n[Debug from find_pivots() line 175] Starting with S = {S}, Bound B = {B}")
         W = set(S)
         Wi_prev = set(S)
 
         forest_parents = dict()
 
         for i in range(self.k):
-            print(f"[Debug from find_pivots() line 175] Iteration {i + 1}")
+            #print(f"[Debug from find_pivots() line 175] Iteration {i + 1}")
             Wi = set()
 
             # Ho to ensure u ∈ Wi−1
             for u in Wi_prev:
                 for v, w_uv in self.graph.get_neighbours(u):
                     new_dist = self.bd[u] + w_uv
-                    print(f"[Debug from find_pivots() line 189] Checking {u} -> {v} (w={w_uv}), proposed bd = {new_dist}, current bd[v] = {self.bd[v]}")
+                    #print(f"[Debug from find_pivots() line 189] Checking {u} -> {v} (w={w_uv}), proposed bd = {new_dist}, current bd[v] = {self.bd[v]}")
 
                     if new_dist < self.bd[v]:
                         # Wi <- Wi ∪ {v}. Add v to the set?
@@ -195,16 +196,16 @@ class DMMSY:
                         forest_parents[v] = u
                         #W ← W ∪ Wi
 
-            print(f"[Debug from find_pivots() line 198] Wi = {Wi}")
+            #print(f"[Debug from find_pivots() line 198] Wi = {Wi}")
             if not Wi:
-                print(f"[Debug from find_pivots() line 198] No new vertices reachable.")
+                #print(f"[Debug from find_pivots() line 198] No new vertices reachable.")
                 break
 
             W.update(Wi)
             Wi_prev = Wi
 
             if len(W) > self.k * len(S):
-                print(f"[Debug from find_pivots() line 207] Early exit: |W| = {len(W)} > {self.k * len(S)}")
+                #print(f"[Debug from find_pivots() line 207] Early exit: |W| = {len(W)} > {self.k * len(S)}")
                 return set(S), W
 
             # Build forest F: all (u,v) ∈ E with u,v ∈ W and bd[v] = bd[u] + w_uv
@@ -221,14 +222,14 @@ class DMMSY:
             # Select pivots
             P = {s for s, size in subtree_sizes.items() if size >= self.k}
 
-            print(f"[Debug from find_pivots() line 224] (Finished inside for loop) Final P = {P}")
-            print(f"[Debug from find_pivots() line 225] (Finished inside for loop) Final W = {W}")
+            #print(f"[Debug from find_pivots() line 224] (Finished inside for loop) Final P = {P}")
+            #print(f"[Debug from find_pivots() line 225] (Finished inside for loop) Final W = {W}")
 
             return P, W
 
         # Default return if no pivot is found
-        #print(f"[Debug from find_pivots() line 230] (Finished outside for loop) Final P = {P}")
-        print(f"[Debug from find_pivots() line 231] (Finished outside for loop) Final W = {W}")
+        ##print(f"[Debug from find_pivots() line 230] (Finished outside for loop) Final P = {P}")
+        #print(f"[Debug from find_pivots() line 231] (Finished outside for loop) Final W = {W}")
         return set(), W
 
 
