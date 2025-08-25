@@ -4,7 +4,7 @@ from src.core.graph import Graph
 from src.visual.graph_visual import GraphVisualizer
 
 
-def dijkstra(graph: Graph, src: str) -> Tuple[dict, dict]:
+def dijkstra(graph: Graph, src: str, visualizer: GraphVisualizer) -> Tuple[dict, dict]:
     # distance/prev ptr. dictionaries
     dist = {node: float('inf') for node in graph.nodes}
     prev = {node: None for node in graph.nodes}
