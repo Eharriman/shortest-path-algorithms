@@ -1,6 +1,7 @@
 import sys
 from typing import Tuple
 from src.core.graph import Graph
+from src.visual.graph_visual import GraphVisualizer
 
 
 def dijkstra(graph: Graph, src: str) -> Tuple[dict, dict]:
@@ -13,6 +14,8 @@ def dijkstra(graph: Graph, src: str) -> Tuple[dict, dict]:
 
     # initial conditions for source node
     dist[src] = 0
+
+    visited = set()
 
     while Q:
         # Retrieves current shortest distance for node
