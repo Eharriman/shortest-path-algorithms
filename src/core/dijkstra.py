@@ -21,6 +21,11 @@ def dijkstra(graph: Graph, src: str, visualizer: GraphVisualizer) -> Tuple[dict,
         # Retrieves current shortest distance for node
         u = min(Q, key=lambda n: dist[n])
         Q.remove(u)
+        # Tracking visited node for visualization
+        visited.add(u)
+
+        highlight_nodes = visited.copy()
+        highlight_edges = set()
 
         # Update length based on neighbour distance
         for neighbour, weight in graph.adj[u]:
@@ -28,6 +33,7 @@ def dijkstra(graph: Graph, src: str, visualizer: GraphVisualizer) -> Tuple[dict,
             if curr_length < dist[neighbour]:
                 dist[neighbour] = curr_length
                 prev[neighbour] = u
+                highlight_edges.add((u, neighbour))
 
     return dist, prev
 
