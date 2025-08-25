@@ -15,7 +15,7 @@ class GraphVisualizer:
             for v, w in self.graph.get_neighbours(u):
                 self.G.add_edge(u, v, weight=w)
 
-    def draw(self, highlight_nodes=None, highlight_edges=None, title="Test Graph", pause=None):
+    def draw(self, highlight_nodes=None, highlight_edges=None, title="Test Graph", pause=None, node_labels=None):
         pos = nx.spring_layout(self.G, seed=42)
         edge_labels = nx.get_edge_attributes(self.G, 'weight')
 
@@ -37,6 +37,13 @@ class GraphVisualizer:
         nx.draw(self.G, pos, with_labels=True, node_color=node_colours, edge_color=edge_colours, node_size=1000,
                 font_weight='bold')
         nx.draw_networkx_edge_labels(self.G, pos, edge_labels=edge_labels)
+
+        if node_labels:
+            custom_labels = {
+                node: f"{node}\n{int(node_labels[node]) if node_labels[node] < float('inf') else '∞'}"
+                for node in self.G.nodes
+            }
+            nx.draw_networkx_labels(self.G, pos, labels=custom_labels, font_color='white')
 
         plt.title(title)
         plt.tight_layout()
