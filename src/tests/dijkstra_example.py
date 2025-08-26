@@ -1,5 +1,6 @@
 from src.core.graph import Graph
 from src.core.dijkstra import dijkstra
+from src.visual.graph_visual import GraphVisualizer
 
 """
 graph1 = Graph(directed=True)
@@ -42,6 +43,11 @@ A -> L: 8
 """
 
 graph1 = Graph(directed=True)
+graph1.add_edge('A', 'B', 3)
+graph1.add_edge('A', 'C', 7)
+graph1.add_edge('B', 'C', 1)
+
+"""
 graph1.add_edge('A', 'B', 2)
 graph1.add_edge('A', 'C', 3)
 graph1.add_edge('B', 'D', 5)
@@ -74,8 +80,12 @@ graph1.add_edge('Q', 'R', 2)
 graph1.add_edge('X', 'Z', 2)
 graph1.add_edge('Y', 'Z', 3)
 graph1.add_edge('Z', 'V', 5)
+"""
 
 
-result = dijkstra(graph1, 'A')
+visualizer = GraphVisualizer(graph1)
 
-print(result)
+dist, prev = dijkstra(graph1, 'A', visualizer)
+
+print("Distances:", dist)
+print("Previous:", prev)

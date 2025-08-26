@@ -35,6 +35,12 @@ def dijkstra(graph: Graph, src: str, visualizer: GraphVisualizer) -> Tuple[dict,
                 prev[neighbour] = u
                 highlight_edges.add((u, neighbour))
 
+        visualizer.draw(
+            highlight_nodes=highlight_nodes,
+            highlight_edges=highlight_edges,
+            title=f"Dijkstra visiting: {u}, distances: {dist}"
+        )
+
     return dist, prev
 
 
